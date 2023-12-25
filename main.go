@@ -41,7 +41,7 @@ func init() {
 	TextFilePost = flag.String("text", GetCurrentText(), "The text file where the post is stored")
 	// TextFileHtml = flag.String("html", "post.html", "The Html file for the post")
 }
-func String(p *Post) string {
+func (p *Post) String() string {
 	return fmt.Sprintf("*%s*\n\n*MEMORY VERSE*\n%s\n\n*BIBLE READING*\n%s\n\n%s\n\n*MESSAGE*\n%s\n\n*%s*\n%s\n\n*HYMN*\n%s\n\n%s\n\n*BIBLE IN ONE YEAR*\n%s\n", p.Topic, p.MemoryVerse, p.BibleVerse, strings.Join(p.BibleVerseBody, "\n\n"), strings.Join(p.BodyMessage, "\n\n"), p.Point, p.PointBody, p.HymnTitle, strings.Join(p.HymnBody, "\n\n"), p.BibleInOneYear)
 }
 func (p *Post) SaveToText(st string) {
@@ -50,7 +50,8 @@ func (p *Post) SaveToText(st string) {
 		fmt.Println(err)
 	}
 	defer file.Close()
-	file.WriteString(String(p))
+	p.String()
+	file.WriteString(p.String())
 }
 func main() {
 	currentDate := GetCurrentDay()
@@ -142,7 +143,9 @@ func main() {
 	URL := fmt.Sprintf("https://flatimes.com/open-heaven-%s/", currentDate)
 	c.Visit(URL)
 	c.Wait()
-	fmt.Println(p)
+	// fmt.Println(p)
+	// p.SaveToText(*TextFilePost)
+	// Tried something her to get things
 	p.SaveToText(*TextFilePost)
 	fmt.Println("created the file and written it there")
 }
