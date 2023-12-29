@@ -54,6 +54,7 @@ func (p *Post) SaveToText(st string) {
 	file.WriteString(p.String())
 }
 func main() {
+	var err error
 	currentDate := GetCurrentDay()
 	p := &Post{}
 
@@ -64,6 +65,7 @@ func main() {
 		fmt.Println("Visiting", r.URL)
 	})
 	c.OnError(func(r *colly.Response, err error) {
+		err = err
 		fmt.Println("did not connect", err)
 	})
 	c.OnResponse(func(r *colly.Response) {
@@ -146,6 +148,10 @@ func main() {
 	// fmt.Println(p)
 	// p.SaveToText(*TextFilePost)
 	// Tried something her to get things
-	p.SaveToText(*TextFilePost)
-	fmt.Println("created the file and written it there")
+	fmt.Println(err)
+	if err == nil {
+		p.SaveToText(*TextFilePost)
+		fmt.Println("created the file and written it there")
+	}
+
 }
