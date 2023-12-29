@@ -148,7 +148,6 @@ func main() {
 	// fmt.Println(p)
 	// p.SaveToText(*TextFilePost)
 	// Tried something her to get things
-	fmt.Println(err)
 	if err == nil {
 		p.SaveToText(*TextFilePost)
 		fmt.Println("created the file and written it there")
